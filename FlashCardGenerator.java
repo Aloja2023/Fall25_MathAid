@@ -8,29 +8,25 @@ public class FlashCardGenerator {
     public static FlashCard generateFlashcard(String category, int difficulty) {
         int max;
         switch (difficulty) {
-            case 1:
-                max = 10;
-                break;
-            case 2:
-                max = 50;
-                break;
-            case 3:
-                max = 100;
-                break;
-            default:
-                throw new IllegalArgumentException("Invalid difficulty level");
+            case 1 -> max = 10;
+            case 2 -> max = 50;
+            case 3 -> max = 100;
+            default -> throw new IllegalArgumentException("Invalid difficulty level");
         }
         switch (category.toLowerCase()) {
-            case "addition":
+            case "addition" -> {
                 return generateAdditionFlashcard(max);
-            case "subtraction":
+            }
+            case "subtraction" -> {
                 return generateSubtractionFlashcard(max);
-            case "multiplication":
+            }
+            case "multiplication" -> {
                 return generateMultiplicationFlashcard(max/2); /*Only small numbers */
-            case "division":
+            }
+            case "division" -> {
                 return generateDivisionFlashcard(max/2); /*Only small numbers */
-            default:
-                throw new IllegalArgumentException("Invalid category"); 
+            }
+            default -> throw new IllegalArgumentException("Invalid category"); 
         }
 
     }
