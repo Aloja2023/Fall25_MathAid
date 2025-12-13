@@ -1,4 +1,4 @@
-package FlashCardProject;
+package FlashCardProject.src.main.java;
 public class FlashCard {
     private final String category;
     private final String question;

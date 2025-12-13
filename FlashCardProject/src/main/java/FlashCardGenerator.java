@@ -1,4 +1,4 @@
-package FlashCardProject;
+package FlashCardProject.src.main.java;
 import java.util.Random;
 
 

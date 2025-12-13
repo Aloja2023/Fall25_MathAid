@@ -1,4 +1,4 @@
-package FlashCardProject;
+package FlashCardProject.src.main.java;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -215,5 +215,9 @@ public class FlashcardApp {
     }
     private UserStats getUserStats(String category) {
         return statsByCategory.computeIfAbsent(category, k -> new UserStats());
+    }
+
+    public Map<String, UserStats> getStatsByCategory() {
+        return statsByCategory;
     }
 }
