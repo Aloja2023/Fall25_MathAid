@@ -10,6 +10,8 @@ import java.util.Stack;
 
 public class FlashcardApp {
     
+    private String userName;
+
     private final Stack<FlashCard> missedStack = new Stack<>();
     private final Map<String, UserStats> statsByCategory = new HashMap<>();
 
@@ -26,8 +28,16 @@ public class FlashcardApp {
         app.run();
     }
     private void run() {
-        ProgressManager.load(statsByCategory);
-        System.out.println("Welcome to the Flashcard App!");
+        userName = ProgressManager.load(statsByCategory);
+
+        if (userName == null || userName.isEmpty()) {
+            System.out.print("Enter your name: ");
+            userName = scanner.nextLine().trim();
+            if (userName.isEmpty()) {
+                userName = "Sudent";
+            }
+        }
+        System.out.println("Welcome, " + userName + "!");
         boolean running = true;
         while (running) {
             printMainMenu();
@@ -39,8 +49,8 @@ public class FlashcardApp {
                 case 4 -> viewProgress();
                 case 5 -> resetProgress();
                 case 6 -> {
-                    System.out.println("Exiting the application. Goodbye!");
-                    ProgressManager.save(statsByCategory);
+                    System.out.println("Exiting the application. Goodbye!" + userName + "!");
+                    ProgressManager.save(userName, statsByCategory);
                     running = false;
                 }
                 default -> System.out.println("Invalid choice. Please choose a valid option (1-6).");
@@ -65,14 +75,16 @@ public class FlashcardApp {
     }
     private void printMainMenu() {
         System.out.println();
-        System.out.println("====== 4th Grade Math Flashcards ======");
+        System.out.println("====== Math Flashcards ======");
+        System.out.println("Student: " + userName);
+        System.out.println("-----------------------------");
         System.out.println("1. Study Mode");
         System.out.println("2. Game Mode");
         System.out.println("3. Review Missed Flashcards");
         System.out.println("4. View Progress");
         System.out.println("5. Reset Progress");
         System.out.println("6. Exit");
-        System.out.println("=======================================");  
+        System.out.println("=============================");  
     }
 
     //Study Mode
@@ -151,7 +163,10 @@ public class FlashcardApp {
             b.getValue().getAccuracy(), 
             a.getValue().getAccuracy()
         ));
-        System.out.println("User Progress by Category:");
+        System.out.println();
+        System.out.println("====== Progress Report for " + userName + " ======");
+        System.out.printf("%-15s | %s%n", "Category", "Stats");
+        System.out.println("--------------------------------"); 
         for (Map.Entry<String, UserStats> entry : list) {
             String category = entry.getKey();
             UserStats stats = entry.getValue();
@@ -166,7 +181,8 @@ public class FlashcardApp {
         if (ans.equals("yes") || ans.equals("y")) {
             statsByCategory.clear();
             missedStack.clear();
-            System.out.println("All progress has been reset.");
+            ProgressManager.save(userName, statsByCategory);
+            System.out.println("Progress reset for " + userName + " completed.");
         } else {
             System.out.println("Progress reset canceled.");
         }
