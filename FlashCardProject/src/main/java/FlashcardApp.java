@@ -26,14 +26,17 @@ public class FlashcardApp {
         app.run();
     }
     private void run() {
-    userName = ProgressManager.load(statsByCategory);
+        String loadedName = ProgressManager.load(statsByCategory);
 
-        if (userName == null || userName.isEmpty()) {
-            System.out.print("Enter your name: ");
-            userName = scanner.nextLine().trim();
-            if (userName.isEmpty()) {
-                userName = "Sudent";
-            }
+        System.out.print("Enter your name: " + (loadedName != null && !loadedName.isEmpty() ? "[" + loadedName + "] Type a new name if this isn't you. " : "") + ":");
+        String inputName = scanner.nextLine().trim();
+
+    if (!inputName.isEmpty()) {
+            userName = inputName;
+        } else if (loadedName != null && !loadedName.isEmpty()) {
+            userName = loadedName;
+        } else {
+            userName = "Student";
         }
         System.out.println("Welcome, " + userName + "!");
         boolean running = true;
