@@ -94,7 +94,7 @@ public class FlashcardApp {
                 missedStack.push(flashCard);
             }
             String cont = readString("Do you want to continue studying? (yes/no): ");
-            continueStudying = cont.equalsIgnoreCase("yes");
+            continueStudying = cont.equalsIgnoreCase("yes") || cont.equalsIgnoreCase("y");
         }
     }
     //Game Mode
