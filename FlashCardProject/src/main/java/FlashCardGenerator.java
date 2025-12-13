@@ -1,11 +1,9 @@
-package FlashCardProject.src.main.java;
 import java.util.Random;
-
 
 public class FlashCardGenerator {
 
-    private static final   Random RAND = new Random();
-    /* Difficulty levels */
+    private static final Random RAND = new Random();
+
     public static FlashCard generateFlashcard(String category, int difficulty) {
         int max;
         switch (difficulty) {
@@ -14,6 +12,7 @@ public class FlashCardGenerator {
             case 3 -> max = 100;
             default -> throw new IllegalArgumentException("Invalid difficulty level");
         }
+
         switch (category.toLowerCase()) {
             case "addition" -> {
                 return generateAdditionFlashcard(max);
@@ -22,42 +21,45 @@ public class FlashCardGenerator {
                 return generateSubtractionFlashcard(max);
             }
             case "multiplication" -> {
-                return generateMultiplicationFlashcard(max/2); /*Only small numbers */
+                return generateMultiplicationFlashcard(max / 2);
             }
             case "division" -> {
-                return generateDivisionFlashcard(max/2); /*Only small numbers */
+                return generateDivisionFlashcard(max / 2);
             }
-            default -> throw new IllegalArgumentException("Invalid category"); 
+            default -> throw new IllegalArgumentException("Invalid category");
         }
-
     }
+
     private static FlashCard generateAdditionFlashcard(int max) {
         int a = RAND.nextInt(max) + 1;
         int b = RAND.nextInt(max) + 1;
         String question = "What is " + a + " + " + b + "?";
-        String answer = Integer.toString(a + b);
-        return new FlashCard("Addition", question, answer);
+        int answer = a + b;
+        return new FlashCard("addition", question, answer);
     }
+
     private static FlashCard generateSubtractionFlashcard(int max) {
         int a = RAND.nextInt(max) + 1;
-        int b = RAND.nextInt(a) + 1; // Ensure non-negative result
+        int b = RAND.nextInt(a) + 1; // ensure non-negative result
         String question = "What is " + a + " - " + b + "?";
-        String answer = Integer.toString(a - b);
-        return new FlashCard("Subtraction", question, answer);
+        int answer = a - b;
+        return new FlashCard("subtraction", question, answer);
     }
+
     private static FlashCard generateMultiplicationFlashcard(int max) {
         int a = RAND.nextInt(max) + 1;
         int b = RAND.nextInt(max) + 1;
         String question = "What is " + a + " * " + b + "?";
-        String answer = Integer.toString(a * b);
-        return new FlashCard("Multiplication", question, answer);
+        int answer = a * b;
+        return new FlashCard("multiplication", question, answer);
     }
+
     private static FlashCard generateDivisionFlashcard(int max) {
-        int b = RAND.nextInt(max) + 1; // Divisor
+        int b = RAND.nextInt(max) + 1; // divisor
         int quotient = RAND.nextInt(max) + 1;
-        int a = b * quotient; // Dividend
+        int a = b * quotient; // dividend
         String question = "What is " + a + " / " + b + "?";
-        String answer = Integer.toString(quotient);
-        return new FlashCard("Division", question, answer);
+        int answer = quotient;
+        return new FlashCard("division", question, answer);
     }
 }

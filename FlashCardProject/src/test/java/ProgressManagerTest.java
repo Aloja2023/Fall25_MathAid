@@ -1,11 +1,16 @@
-import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.io.TempDir;
-
+import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.AfterEach;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
 public class ProgressManagerTest {
 
@@ -15,9 +20,16 @@ public class ProgressManagerTest {
     private String originalUserDir;
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws IOException {
         originalUserDir = System.getProperty("user.dir");
-        System.setProperty("user.dir", tempDir.toString());
+        // Create a fresh subdirectory for each test so files don't leak between methods
+        Path perTest = Files.createTempDirectory(tempDir, "testRun");
+        System.setProperty("user.dir", perTest.toString());
+        // Ensure no leftover progress file exists before each test (both per-test dir and project root)
+        Files.deleteIfExists(perTest.resolve("user_progress.txt"));
+        if (originalUserDir != null) {
+            Files.deleteIfExists(Path.of(originalUserDir).resolve("user_progress.txt"));
+        }
     }
 
     @AfterEach

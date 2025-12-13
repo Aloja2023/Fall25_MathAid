@@ -1,5 +1,3 @@
-package FlashCardProject.src.main.java;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -9,7 +7,7 @@ import java.util.Scanner;
 import java.util.Stack;
 
 public class FlashcardApp {
-    
+
     private String userName;
 
     private final Stack<FlashCard> missedStack = new Stack<>();
@@ -18,17 +16,17 @@ public class FlashcardApp {
     private final Scanner scanner = new Scanner(System.in);
 
     private final List<String> categories = Arrays.asList(
-        "Addition", 
-        "Subtraction", 
-        "Multiplication", 
-        "Division"
+        "addition",
+        "subtraction",
+        "multiplication",
+        "division"
     );
     public static void main(String[] args) {
         FlashcardApp app = new FlashcardApp();
         app.run();
     }
     private void run() {
-        userName = ProgressManager.load(statsByCategory);
+    userName = ProgressManager.load(statsByCategory);
 
         if (userName == null || userName.isEmpty()) {
             System.out.print("Enter your name: ");
@@ -97,11 +95,12 @@ public class FlashcardApp {
             FlashCard flashCard = FlashCardGenerator.generateFlashcard(category, difficulty);
             System.out.println("Question: " + flashCard.getQuestion());
             String userAnswer = readString("Your answer: ");
-            if (userAnswer.equalsIgnoreCase(flashCard.getAnswer())) {
+            String correct = Integer.toString(flashCard.getAnswer());
+            if (userAnswer.trim().equalsIgnoreCase(correct)) {
                 System.out.println("Correct!");
                 getUserStats(category).recordResult(true);
             } else {
-                System.out.println("Incorrect. The correct answer is: " + flashCard.getAnswer());
+                System.out.println("Incorrect. The correct answer is: " + correct);
                 getUserStats(category).recordResult(false);
                 missedStack.push(flashCard);
             }
@@ -118,14 +117,15 @@ public class FlashcardApp {
         int rounds = 5;
         for (int i = 0; i < rounds; i++) {
             FlashCard flashCard = FlashCardGenerator.generateFlashcard(category, difficulty);
-            System.out.println("Question: " + flashCard.getQuestion());                         
+            System.out.println("Question: " + flashCard.getQuestion());
             String userAnswer = readString("Your answer: ");
-            if (userAnswer.equalsIgnoreCase(flashCard.getAnswer())) {
+            String correct = Integer.toString(flashCard.getAnswer());
+            if (userAnswer.trim().equalsIgnoreCase(correct)) {
                 System.out.println("Correct!");
                 score++;
                 getUserStats(category).recordResult(true);
             } else {
-                System.out.println("Incorrect. The correct answer is: " + flashCard.getAnswer());
+                System.out.println("Incorrect. The correct answer is: " + correct);
                 getUserStats(category).recordResult(false);
                 missedStack.push(flashCard);
             }
@@ -143,10 +143,11 @@ public class FlashcardApp {
             FlashCard flashCard = missedStack.pop();
             System.out.println("Question: " + flashCard.getQuestion());
             String userAnswer = readString("Your answer: ");
-            if (userAnswer.equalsIgnoreCase(flashCard.getAnswer())) {
+            String correct = Integer.toString(flashCard.getAnswer());
+            if (userAnswer.trim().equalsIgnoreCase(correct)) {
                 System.out.println("Correct!");
             } else {
-                System.out.println("Incorrect. The correct answer is: " + flashCard.getAnswer()); 
+                System.out.println("Incorrect. The correct answer is: " + correct);
                 missedStack.push(flashCard);
             }
         }
