@@ -1,3 +1,4 @@
+package FlashCardProject;
 public class UserStats {
     private int attempts;
     private int correct;

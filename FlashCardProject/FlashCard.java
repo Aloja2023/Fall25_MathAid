@@ -1,3 +1,4 @@
+package FlashCardProject;
 public class FlashCard {
     private final String category;
     private final String question;
