@@ -155,6 +155,7 @@ public class FlashcardApp {
     private void viewProgress() {
         if (statsByCategory.isEmpty()) {
             System.out.println("No progress recorded yet.");
+            System.out.println("Please engage in Study or Game Mode to track your progress.");
             return;
         }
         List<Map.Entry<String, UserStats>> list =
