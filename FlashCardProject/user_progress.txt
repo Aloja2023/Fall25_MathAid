@@ -1,3 +1,2 @@
-USER,Bayron
-multiplication,5,3
-addition,10,8
+USER,Chris
+addition,5,5
